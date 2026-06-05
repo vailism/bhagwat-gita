@@ -1,5 +1,5 @@
 // Bhagavad Gita SPA Application Logic
-// A pure vanilla JS implementation with zero-dependencies, hash routing, custom audio synth, canvas visualizers, search, and AI assistant.
+// A pure vanilla JS implementation with zero-dependencies, hash routing, custom audio synth, canvas visualizers, and AI assistant.
 
 // ==========================================
 // 0. GLOBAL UTILITIES (Haptics, Voice)
@@ -355,21 +355,6 @@ const sacredSearchMap = {
   death: { chapters: [2, 8], keywords: ["soul", "immortal", "body", "eternal"] }
 };
 
-const emotionSuggestions = [
-  { emoji: "😰", label: "Anxiety", key: "anxiety" },
-  { emoji: "💔", label: "Breakup", key: "breakup" },
-  { emoji: "🔥", label: "Motivation", key: "motivation" },
-  { emoji: "😨", label: "Fear", key: "fear" },
-  { emoji: "🎯", label: "Purpose", key: "purpose" },
-  { emoji: "😤", label: "Anger", key: "anger" },
-  { emoji: "🧘", label: "Peace", key: "peace" },
-  { emoji: "💪", label: "Discipline", key: "discipline" },
-  { emoji: "💕", label: "Love", key: "love" },
-  { emoji: "😢", label: "Depression", key: "depression" },
-  { emoji: "🙏", label: "Gratitude", key: "gratitude" },
-  { emoji: "☠️", label: "Loss", key: "loss" }
-];
-
 const wisdomResponses = {
   worry: { text: "The wise do not grieve for what is lost, nor do they fear what is yet to come. Live fully in this moment — it is all you truly have.", verseIndex: 0 },
   future: { text: "Do not burden yourself with what has not yet happened. Your duty is in this moment. The future unfolds from the seeds you plant today.", verseIndex: 0 },
@@ -517,7 +502,6 @@ const store = {
   showCommentary: false,
 
   // App States
-  searchOpen: false,
   askKrishnaOpen: false,
   nightMode: false,
   chatMessages: [],
@@ -1993,184 +1977,6 @@ function generateAndDownloadWallpaper(quote) {
 }
 
 // ==========================================
-// 9. SACRED SEARCH & EMOTIONS INDEX
-// ==========================================
-
-function setupSearchModal() {
-  const modal = document.getElementById("search-modal");
-  const trigger = document.getElementById("search-trigger");
-  const closeBtn = document.getElementById("search-close");
-  const input = document.getElementById("search-input");
-  const resultsContainer = document.getElementById("search-results-container");
-
-  const openSearch = () => {
-    modal.classList.remove("hidden");
-    input.value = "";
-    renderSearchSuggestions();
-    setTimeout(() => input.focus(), 50);
-  };
-
-  const closeSearch = () => {
-    modal.classList.add("hidden");
-  };
-
-  trigger.addEventListener("click", openSearch);
-  closeBtn.addEventListener("click", closeSearch);
-  modal.querySelector(".modal-backdrop").addEventListener("click", closeSearch);
-
-  // Escape key close
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-      closeSearch();
-    }
-  });
-
-  input.addEventListener("input", (e) => {
-    const query = e.target.value.trim();
-    if (!query) {
-      renderSearchSuggestions();
-    } else {
-      renderSearchResults(query);
-    }
-  });
-
-  function renderSearchSuggestions() {
-    resultsContainer.innerHTML = `
-      <div>
-        <p class="text-xs tracking-widest uppercase text-divine-gold/40 mb-4 px-2 flex items-center gap-2">
-          <i data-lucide="heart" style="width: 10px; height: 10px;"></i>
-          <span>What are you feeling?</span>
-        </p>
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="emotions-suggestions-list">
-          <!-- Populated -->
-        </div>
-      </div>
-    `;
-
-    const list = document.getElementById("emotions-suggestions-list");
-    emotionSuggestions.forEach(em => {
-      const btn = document.createElement("button");
-      btn.className = "flex flex-col items-center gap-1.5 p-3 rounded-xl glass hover:bg-white/[0.06] transition-all group cursor-pointer border-none bg-transparent w-full text-white";
-      btn.innerHTML = `
-        <span class="text-xl group-hover:scale-110 transition-transform">${em.emoji}</span>
-        <span class="text-xs text-white/40 group-hover:text-white/60">${em.label}</span>
-      `;
-      btn.addEventListener("click", () => {
-        renderEmotionResults(em.key);
-      });
-      list.appendChild(btn);
-    });
-    
-    lucide.createIcons();
-  }
-
-  function renderEmotionResults(emotionKey) {
-    const result = sacredSearchMap[emotionKey];
-    if (!result) return;
-
-    resultsContainer.innerHTML = `
-      <div>
-        <button id="search-back-emotions" class="text-xs text-divine-gold/50 hover:text-divine-gold mb-4 border-none bg-transparent cursor-pointer flex items-center gap-1">
-          ← Back to emotions
-        </button>
-        <p class="text-xs tracking-widest uppercase text-divine-gold/40 mb-4 px-2 flex items-center gap-2">
-          <i data-lucide="sparkles" style="width: 10px; height: 10px;"></i>
-          <span>Krishna's guidance for ${emotionKey}</span>
-        </p>
-        <div class="space-y-1" id="search-chapters-results"></div>
-        <div class="mt-6">
-          <p class="text-xs tracking-widest uppercase text-white/20 mb-3 px-2">Relevant Verses</p>
-          <div class="space-y-1" id="search-verses-results"></div>
-        </div>
-      </div>
-    `;
-
-    // Chapters list
-    const chContainer = document.getElementById("search-chapters-results");
-    const matchedChapters = chapters.filter(ch => result.chapters.includes(ch.id));
-    matchedChapters.forEach(ch => {
-      const link = document.createElement("a");
-      link.href = `#/chapter/${ch.id}`;
-      link.className = "flex items-center gap-4 p-3 rounded-xl hover:bg-white/[0.04] transition-all group decoration-none";
-      link.innerHTML = `
-        <span class="text-divine-gold/40 text-xs font-mono w-6">${String(ch.id).padStart(2, "0")}</span>
-        <div class="flex-1 min-w-0">
-          <p class="text-sm text-white/70 group-hover:text-white truncate">${ch.name}</p>
-          <p class="text-xs text-white/25 truncate">${ch.nameSanskrit}</p>
-        </div>
-        <i data-lucide="arrow-right" class="text-white/10 group-hover:text-divine-gold/50 shrink-0"></i>
-      `;
-      link.addEventListener("click", closeSearch);
-      chContainer.appendChild(link);
-    });
-
-    // Verses list
-    const vContainer = document.getElementById("search-verses-results");
-    const matchedVerses = featuredVerses.filter(v => result.chapters.includes(v.chapter));
-    matchedVerses.forEach(v => {
-      const link = document.createElement("a");
-      link.href = `#/chapter/${v.chapter}`;
-      link.className = "block p-3 rounded-xl hover:bg-white/[0.04] transition-all decoration-none mb-1";
-      link.innerHTML = `
-        <p class="text-sm text-white/50 italic line-clamp-2">&ldquo;${v.english}&rdquo;</p>
-        <p class="text-xs text-divine-gold/30 mt-1">Chapter ${v.chapter}, Verse ${v.verse}</p>
-      `;
-      link.addEventListener("click", closeSearch);
-      vContainer.appendChild(link);
-    });
-
-    document.getElementById("search-back-emotions").addEventListener("click", renderSearchSuggestions);
-    lucide.createIcons();
-  }
-
-  function renderSearchResults(query) {
-    const queryLower = query.toLowerCase();
-    const matchedChapters = chapters.filter(ch => 
-      ch.name.toLowerCase().includes(queryLower) ||
-      ch.nameSanskrit.includes(query) ||
-      ch.nameHindi.includes(query) ||
-      ch.summary.toLowerCase().includes(queryLower) ||
-      ch.theme.toLowerCase().includes(queryLower)
-    );
-
-    if (matchedChapters.length === 0) {
-      resultsContainer.innerHTML = `
-        <p class="text-center text-white/20 py-8 text-sm">
-          No results found. Try searching by emotion instead.
-        </p>
-      `;
-      return;
-    }
-
-    resultsContainer.innerHTML = `
-      <div>
-        <p class="text-xs tracking-widest uppercase text-white/20 mb-3 px-2">Chapters</p>
-        <div class="space-y-1" id="search-chapters-results"></div>
-      </div>
-    `;
-
-    const chContainer = document.getElementById("search-chapters-results");
-    matchedChapters.forEach(ch => {
-      const link = document.createElement("a");
-      link.href = `#/chapter/${ch.id}`;
-      link.className = "flex items-center gap-4 p-3 rounded-xl hover:bg-white/[0.04] transition-all group decoration-none";
-      link.innerHTML = `
-        <span class="text-divine-gold/40 text-xs font-mono w-6">${String(ch.id).padStart(2, "0")}</span>
-        <div class="flex-1 min-w-0">
-          <p class="text-sm text-white/70 group-hover:text-white truncate">${ch.name}</p>
-          <p class="text-xs text-white/25 truncate">${ch.nameSanskrit} · ${ch.verseCount} verses</p>
-        </div>
-        <i data-lucide="arrow-right" class="text-white/10 group-hover:text-divine-gold/50 shrink-0"></i>
-      `;
-      link.addEventListener("click", closeSearch);
-      chContainer.appendChild(link);
-    });
-
-    lucide.createIcons();
-  }
-}
-
-// ==========================================
 // 10. COMPONENT: ASK KRISHNA CHAT PANEL
 // ==========================================
 
@@ -2221,12 +2027,17 @@ function setupAskKrishna() {
     }
   });
 
-  // Night Mode inside Chat
-  nightBtn.addEventListener("click", () => {
-    store.nightMode = !store.nightMode;
-    panel.classList.toggle("night-overlay", store.nightMode);
-    nightBtn.classList.toggle("active", store.nightMode);
-  });
+  // Night Mode inside Chat (guarded: night button may not exist)
+  const nightBtn = panel.querySelector('.chat-night-btn') || document.getElementById('chat-night-btn');
+  if (nightBtn) {
+    nightBtn.addEventListener("click", () => {
+      store.nightMode = !store.nightMode;
+      panel.classList.toggle("night-overlay", store.nightMode);
+      nightBtn.classList.toggle("active", store.nightMode);
+    });
+    // initialize state
+    nightBtn.classList.toggle("active", !!store.nightMode);
+  }
 
   // Sending message
   const sendMessage = () => {
@@ -2643,8 +2454,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // renderHomeStorytelling(); // Redesigned to be uncluttered, storytelling section removed
   setupGeneralScrollAnimations();
 
-  // 4. Bind Search modal and Chat assistant hooks
-  setupSearchModal();
+  // 4. Bind Chat assistant hooks
   setupAskKrishna();
   initWallpaperCustomizer();
 
