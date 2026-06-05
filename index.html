@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhagavad Gita — Experience the Divine Wisdom</title>
+  <meta name="description" content="A premium, Apple-level cinematic experience of the Bhagavad Gita with daily wisdom, cosmic visualizations, search, and reading focus mode.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="theme-light">
+
+  <!-- Reactive Background Particles -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Cinematic OM Opening -->
+  <div id="om-opening" class="om-overlay">
+    <div class="om-glow"></div>
+    <div class="om-symbol-container">
+      <span class="om-symbol">ॐ</span>
+    </div>
+    <div id="opening-particles-container"></div>
+    <div class="opening-quote-container">
+      <p id="opening-quote" class="opening-quote"></p>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="glass">
+    <div class="nav-container">
+      <!-- Logo -->
+      <!-- Logo -->
+      <a href="#" class="nav-logo">
+        <img src="logo.png" class="logo-img" alt="Bhagavad Gita Logo">
+        <span class="logo-text">Bhagavad Gita</span>
+      </a>
+      
+      <!-- Desktop Links -->
+      <div class="nav-links">
+        <a href="#" class="nav-link active" data-route="home">Home</a>
+        <a href="#/chapters" class="nav-link" data-route="chapters">Chapters</a>
+        <a href="#/quotes" class="nav-link" data-route="quotes">Quotes</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button id="search-trigger" class="btn-icon glass" aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
+        <button id="ask-krishna-trigger" class="btn-primary glass">
+          <i data-lucide="sparkles"></i>
+          <span>Ask Krishna</span>
+        </button>
+        <button id="mobile-menu-trigger" class="btn-icon glass md-hide" aria-label="Menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu-panel glass-strong hidden">
+      <div class="mobile-links">
+        <a href="#" class="mobile-link"><i data-lucide="home"></i> Home</a>
+        <a href="#/chapters" class="mobile-link"><i data-lucide="book-open"></i> Chapters</a>
+        <a href="#/quotes" class="mobile-link"><i data-lucide="quote"></i> Quotes</a>
+        <button id="ask-krishna-mobile" class="mobile-link btn-ask-mobile"><i data-lucide="sparkles"></i> Ask Krishna</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Views Router Target Container -->
+  <main id="main-content">
+    
+    <!-- HOME VIEW (Default) -->
+    <div id="view-home" class="route-view">
+      
+      <!-- Hero Section -->
+      <header id="hero" class="relative">
+        <div class="hero-shell max-width-7xl">
+          <div class="hero-copy-panel">
+            <span class="hero-tag">Bhagavad Gita in Hindi & English</span>
+            <h1 class="hero-title">Read. Reflect. Rise.</h1>
+            <p class="hero-subtitle">A calm, cinematic way to explore Krishna’s wisdom through chapters, verses, reflections, and search.</p>
+
+            <div class="hero-actions">
+              <a href="#/chapters" class="btn-primary hero-cta">Explore Chapters</a>
+              <button id="wisdom-cta" class="btn-secondary glass hero-secondary-cta">Shloka of the Day</button>
+            </div>
+
+            <div class="hero-metrics">
+              <div class="hero-metric glass">
+                <span class="hero-metric-value">18</span>
+                <span class="hero-metric-label">Chapters</span>
+              </div>
+              <div class="hero-metric glass">
+                <span class="hero-metric-value">700</span>
+                <span class="hero-metric-label">Verses</span>
+              </div>
+              <div class="hero-metric glass">
+                <span class="hero-metric-value">2</span>
+                <span class="hero-metric-label">Languages</span>
+              </div>
+            </div>
+
+            <div class="hero-verse-card glass-strong">
+              <p class="hero-verse-label">Featured Verse</p>
+              <p class="hero-verse-sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन</p>
+              <p class="hero-verse-english">You have the right to perform your duty, but not to the fruits of your actions.</p>
+              <p class="hero-verse-ref">Bhagavad Gita 2.47</p>
+            </div>
+          </div>
+
+          <div class="hero-visual-panel">
+            <div class="hero-media-card media-short glass-strong aspect-16-9">
+              <div class="hero-media-main">
+                <video class="hero-video hero-video-main" autoplay muted loop playsinline preload="metadata" poster="Divine Lord Krishna HD Wallpaper _ Spiritual Art for Mobile & Desktop.jpeg">
+                  <source src="video.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+
+            <div class="hero-media-card hero-media-secondary glass">
+              <img
+                src="Divine Lord Krishna HD Wallpaper _ Spiritual Art for Mobile & Desktop.jpeg"
+                alt="Bhagavad Gita hero artwork"
+                class="hero-image hero-image-secondary"
+              >
+              <div class="hero-media-copy">
+                <p class="hero-media-kicker">Shloka of the Day</p>
+                <p class="hero-media-text">Explore timeless wisdom in a cleaner, calmer reading experience.</p>
+              </div>
+            </div>
+
+            <div class="hero-floating-note glass">
+              <span class="hero-floating-dot"></span>
+              <span>Daily verse, chapters, and commentary in one place</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Chapters Grid Explorer -->
+      <section id="chapters" class="chapters-section">
+        <div class="max-width-7xl">
+          <div class="section-header">
+            <p class="section-tag">18 Chapters of Wisdom</p>
+            <h2 class="section-title">Explore the Chapters</h2>
+            <p class="section-desc">Each chapter is a step on the path from confusion to clarity, from doubt to divine understanding.</p>
+          </div>
+          <div id="chapters-grid" class="chapters-grid">
+            <!-- Dynamic Chapter cards from API/local fallback -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Daily Wisdom Section -->
+      <section id="daily-wisdom" class="wisdom-section">
+        <div class="max-width-4xl">
+          <div class="text-center">
+            <div class="tag-gold-pill">
+              <i data-lucide="sparkles"></i>
+              <span>Krishna's Message For Today</span>
+            </div>
+          </div>
+          <div id="daily-wisdom-card-container">
+            <!-- Renders Daily wisdom card -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- Footer -->
+      <footer id="footer">
+        <img src="logo.png" class="footer-logo-img" alt="Bhagavad Gita Logo">
+        <p class="footer-tagline">“When confusion ends, wisdom begins.”</p>
+        <p class="footer-copyright">© 2026 Bhagavad Gita. Designed for inner peace.</p>
+      </footer>
+    </div>
+
+    <!-- CHAPTER READER VIEW -->
+    <div id="view-chapter" class="route-view hidden">
+      <!-- Chapter content is rendered dynamically -->
+    </div>
+
+    <!-- QUOTES VIEW -->
+    <div id="view-quotes" class="route-view hidden">
+      <!-- Quotes content is rendered dynamically -->
+    </div>
+
+  </main>
+
+  <!-- Search modal removed -->
+
+  <!-- ASK KRISHNA CHAT PANEL -->
+  <div id="ask-krishna" class="chat-overlay hidden">
+    <div class="chat-backdrop"></div>
+    <div class="chat-panel glass-strong" id="chat-panel">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-branding">
+          <div class="chat-logo-avatar">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <div>
+            <p class="chat-title">Ask Krishna</p>
+            <p class="chat-subtitle">Wisdom from the Gita</p>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button id="chat-close" class="chat-action-btn" aria-label="Close Chat" title="Close Chat"><i data-lucide="x"></i></button>
+        </div>
+      </div>
+      
+      <!-- Chat Messages Container -->
+      <div id="chat-messages" class="chat-messages">
+        <!-- Message bubbles render here -->
+      </div>
+      
+      <!-- Chat Input Area -->
+      <div class="chat-input-area">
+        <div class="chat-input-wrapper">
+          <input type="text" id="chat-input" placeholder="Ask anything...">
+          <button id="chat-send" class="chat-send-btn" aria-label="Send Message" title="Send Message"><i data-lucide="send"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WALLPAPER EDITOR MODAL -->
+  <div id="wallpaper-modal" class="modal-overlay hidden">
+    <div class="modal-backdrop"></div>
+    <div class="wallpaper-modal-box glass-strong max-w-2xl w-full p-6 md:p-8 rounded-3xl space-y-6">
+      <div class="flex justify-between items-center pb-4 border-b border-white/5">
+        <h3 class="text-lg font-display font-semibold flex items-center gap-2">
+          <i data-lucide="image" class="text-divine-gold"></i>
+          <span>Wallpaper Customizer</span>
+        </h3>
+        <button id="wallpaper-close" class="btn-close-modal" aria-label="Close Wallpaper Customizer" title="Close Wallpaper Customizer"><i data-lucide="x"></i></button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Live Preview Card (Scaled down mobile aspect ratio) -->
+        <div class="flex justify-center items-center bg-black/40 rounded-2xl p-4 border border-white/5">
+          <div id="wallpaper-preview-card" class="wallpaper-preview-card">
+            <!-- Dynamic preview renders here -->
+          </div>
+        </div>
+
+        <!-- Customization Options -->
+        <div class="flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <span class="text-xs uppercase tracking-wider opacity-40 font-mono">Select Theme Style</span>
+            <div class="grid grid-cols-2 gap-3" id="wallpaper-theme-options">
+              <!-- Render theme options -->
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <span class="text-xs uppercase tracking-wider opacity-40 font-mono">Options</span>
+            <div class="space-y-2">
+              <label class="flex items-center gap-2 text-xs opacity-70 cursor-pointer">
+                <input type="checkbox" id="wp-show-om" checked class="rounded bg-black/40 border-white/10 text-divine-gold">
+                <span>Show sacred "ॐ" Symbol</span>
+              </label>
+              <label class="flex items-center gap-2 text-xs opacity-70 cursor-pointer">
+                <input type="checkbox" id="wp-show-branding" checked class="rounded bg-black/40 border-white/10 text-divine-gold">
+                <span>Show app watermark</span>
+              </label>
+            </div>
+          </div>
+
+          <button id="wp-download-btn" class="btn-primary glow-gold w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm">
+            <i data-lucide="download"></i>
+            <span>Download High-Res (1080x1920)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
